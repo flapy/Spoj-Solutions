@@ -1,0 +1,135 @@
+import java.util.*;
+import java.io.*;
+class DisjointSetUnion
+{
+	int parent[];
+	public DisjointSetUnion(int n)
+	{
+		parent=new int[n+1];
+		for (int i = 0; i <= n; i++)
+		{
+			//every node is a parent of itself
+			parent[i] = i;
+		}
+	}
+	int find(int u)
+	{
+		if(parent[u]==u)
+		{
+			return u;
+		}
+		return parent[u]=find(parent[u]);
+	}
+	void merge(int u,int v)
+	{
+		parent[v]=u;
+	}
+
+}
+class Job implements Comparator<Job>
+{
+	//char id;
+	int deadline,profit;
+	public Job()
+	{
+
+	}
+	public Job(int deadline,int profit)
+	{
+		//this.id=id;
+		this.deadline=deadline;
+		this.profit=profit;
+	}
+	public static int findMaxDeadline(ArrayList<Job> arr)
+	{
+		int ans = Integer.MIN_VALUE;
+		Iterator <Job> itr=arr.iterator();
+		while(itr.hasNext())
+		{
+			ans=Math.max((itr.next()).deadline,ans);
+		}
+		return ans;
+	}
+	public static void printJobScheduling(ArrayList<Job> arr)
+	{
+		int maxDeadline=findMaxDeadline(arr);
+		DisjointSetUnion dsu=new DisjointSetUnion(maxDeadline);
+		Collections.sort(arr,new Job());
+		Iterator<Job> itr=arr.iterator();
+		int sum=0;
+		while(itr.hasNext())
+		{
+			Job temp=itr.next();
+			int availableSlot = dsu.find(temp.deadline);
+			//if any free slot available
+			if (availableSlot > 0)
+			{
+				//This slot is taken by this job 'i' 
+				//so we need to update the greatest free slot	 
+				dsu.merge(dsu.find(availableSlot - 1), availableSlot);
+				sum+=temp.profit;
+			}
+		}
+		System.out.println(sum);
+	}
+	public int compare(Job j1,Job j2)
+	{
+		return j1.profit>j2.profit?-1:1;
+	}
+}
+class FastIO
+{
+    static BufferedInputStream in = new BufferedInputStream(System.in);
+    static int readInt() {
+        int no = 0;
+        boolean minus = false;
+        try {
+            int a = in.read();
+            while (a == 32 || a == 10) //10 is newline & 32 is ASCII for space
+                a = in.read();
+            if (a == '-') {
+                minus = true;
+                a = in.read();
+            }
+            while (a != 10 && a != 32 && a != -1) {
+                no = no * 10 + (a - '0');
+                a = in.read();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return minus ? -no: no;
+    }
+    static String read() {
+        StringBuilder str = new StringBuilder();
+        try {
+            int a = in.read();
+            while (a == 32)
+                a = in.read();
+            while (a != 10 && a != 32 && a != -1) {
+                str.append((char)a);
+                a = in.read();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return str.toString();
+    }
+}
+class Main
+{
+	public static void main(String args[])
+	{
+		ArrayList<Job> al=new ArrayList<Job>();
+		FastIO sc=new FastIO();
+		int n=sc.readInt();
+		for(int i=0;i<n;i++)
+		{
+			int pro=sc.readInt();
+			int deadline=sc.readInt();
+			al.add(new Job(deadline,pro));
+		}
+		//System.out.println("Following jobs need to be executed for maximum profit");
+		Job.printJobScheduling(al);
+	}
+}

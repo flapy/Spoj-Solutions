@@ -1,0 +1,21 @@
+import java.util.Scanner;
+import java.math.*;
+class Last
+{
+	public static void main(String args[])
+	{
+		BigInteger bi1, bi2, bi3;
+		Scanner s=new Scanner(System.in);
+		int t=s.nextInt();
+		while(t-->0)
+		{
+			String a=s.next();String b=s.next();
+			BigInteger exponent = new BigInteger(b);
+			 bi1 = new BigInteger(a);
+        		bi2 = new BigInteger("10");
+		        // perform modPow operation on bi1 using bi2 and exp
+			bi3 = bi1.modPow(exponent, bi2);
+			System.out.println(bi3);
+		}
+	}
+}

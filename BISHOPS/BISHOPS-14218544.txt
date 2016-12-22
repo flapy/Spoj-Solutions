@@ -1,0 +1,26 @@
+import java.math.BigInteger;
+import java.util.*;
+import java.io.*;
+class Bishops
+{
+	public static void main(String args[]) throws IOException
+	{
+		Scanner s=new Scanner(System.in);
+		while(s.hasNextLine())
+		{
+			String s1=s.nextLine();
+			if(s1.equals("1"))
+				System.out.println("1");
+			else if(s1.equals("0"))
+				System.out.println("0");
+			else
+			{
+				BigInteger num=new BigInteger(s1);
+				BigInteger two =new BigInteger("2");
+				BigInteger num1=num.subtract(two);
+				BigInteger ans=num.add(num1);
+				System.out.println(ans);
+			}
+		}
+	}
+}

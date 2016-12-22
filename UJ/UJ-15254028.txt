@@ -1,0 +1,24 @@
+import java.util.*;
+import java.math.*;
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner s=new Scanner(System.in);
+		int n=s.nextInt();int k=s.nextInt();
+		while(true)
+		{
+			if(k==0 && n==0)
+			{
+				break;
+			}
+			else
+			{
+				BigInteger bik=new BigInteger(n+"");
+				System.out.println(bik.pow(k));
+			}
+			n=s.nextInt();
+			k=s.nextInt();
+		}
+	}
+}

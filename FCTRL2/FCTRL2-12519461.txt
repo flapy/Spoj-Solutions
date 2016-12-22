@@ -1,0 +1,25 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class BigI
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner s=new Scanner(System.in);
+		int t;
+		t=s.nextInt();
+		while(t>0)
+		{
+			int n=s.nextInt();
+			BigInteger bi=new BigInteger("1");
+			for(int i=1;i<=n;i++)
+			bi=bi.multiply(new BigInteger(i+""));
+			String fact=bi.toString();
+			System.out.println(fact);
+			t--;
+		}
+	}
+} 
